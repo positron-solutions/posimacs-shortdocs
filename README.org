@@ -1,0 +1,21 @@
+#+TITLE: Posimacs Shortdocs
+
+Supplement the built-in shortdocs with many functions that are distributed with
+Emacs and could use cheat-sheets when forgetting related functions / variables.
+
+License and all that on the way.  This is being maintained.  Just rushing it out
+like this because it doesn't need complex CI.
+
+*Please sign off on commits.  There is a DCO in here.  It might convince FSF to
+cherry-pick the good ones without second thought.*
+
+** Install with Straight
+
+#+begin_src elisp
+
+  (straight-use-package
+   '(posimacs-shortdocs :type git :host github :repo "positron-solutions/posimacs-shortdocs"))
+
+#+end_src
+
+** Install with idk (PR's welcome)
