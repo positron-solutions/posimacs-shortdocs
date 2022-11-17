@@ -14,7 +14,9 @@ cherry-pick the good ones without second thought.*
 #+begin_src elisp
 
   (straight-use-package
-   '(posimacs-shortdocs :type git :host github :repo "positron-solutions/posimacs-shortdocs"))
+   '(posimacs-shortdocs
+     :type git :host github :repo "positron-solutions/posimacs-shortdocs")
+   :demand t)
 
 #+end_src
 
