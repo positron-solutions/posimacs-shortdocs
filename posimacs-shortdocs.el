@@ -36,53 +36,68 @@
    :no-eval (symbol-plist 'magit-dispatch)
    :eg-result-string "(transient--prefix #<transient-prefix transient-prefix-20997da>)")
   (eieio-object-class
+   :no-manual t
    :eval (eieio-object-class (get 'magit-dispatch 'transient--prefix)))
   (eieio-object-class-name
+   :no-manual t
    :eval (eieio-object-class-name (get 'magit-dispatch 'transient--prefix)))
   (eieio-class-slots
+   :no-manual t
    :no-eval (eieio-class-slots 'transient-prefix)
    :eg-result-string "list of slots")
   (find-class
+   :no-manual t
    :no-eval (find-class 'transient-prefix)
    :eg-result-string "class struct")
   (describe-function
    :no-eval (describe-function 'transient-prefix)
    :eg-result-string "displays class constructor options in help buffer")
   (object-write
+   :no-manual t
    :eval (get 'magit-dispatch 'transient--prefix))
   (oref
+   :no-manual t
    :eval (oref (get 'magit-dispatch 'transient--prefix) command)
    :eval (oref (get 'magit-dispatch 'transient--prefix) history-pos))
   (slot-value
+   :no-manual t
    :eval (slot-value (get 'magit-dispatch 'transient--prefix) 'scope)
    :eval (slot-value (get 'magit-dispatch 'transient--prefix) 'command))
   (child-of-class-p
+   :no-manual t
    :eval (child-of-class-p transient-argument transient-child))
   (slot-exists-p
+   :no-manual t
    :eval (slot-exists-p transient-argument 'level)
    :eval (slot-exists-p transient-argument 'command)
    :eval (slot-exists-p transient-argument 'not-a-real-slot))
   (slot-boundp
+   :no-manual t
    :eval (slot-boundp (get 'magit-dispatch 'transient--prefix) 'command))
-  (eieio-browse)
+  (eieio-browse
+   :no-manual t
+   :eg-result-string "Show hierarchy of classes")
   "Defining and Overriding Classes"
-  (defclass)
+  ;; defining methods is in the manual, but defining classes is not.
+  (defclass :no-manual t)
   (cl-defgeneric)
   (cl-defmethod)
-  (oref)
-  (oref-default)
-  (oset)
-  (oset-default)
-  (cl-call-next-method)
-  (cl-next-method-p))
+  (oref :no-manual t)
+  (oref-default :no-manual t)
+  (oset :no-manual t)
+  (oset-default :no-manual t)
+  (cl-call-next-method
+   :no-eval (call-next-method obj))
+  (cl-next-method-p
+   :no-eval (cl-next-method-p)))
 
 (define-short-documentation-group transient
   "Macros for defining new instances."
-  (transient-define-prefix)
-  (transient-define-argument)
-  (transient-define-infix)
-  (transient-define-argument)
-  (transient-define-groups)
+  (transient-define-prefix :no-manual t)
+  (transient-define-argument :no-manual t)
+  (transient-define-infix :no-manual t)
+  (transient-define-argument :no-manual t)
+  (transient-define-groups :no-manual t)
   "Access during layout"
   (oref
    :no-manual t
@@ -90,69 +105,120 @@
   "Access during suffix body"
   (transient-suffixes
    :no-eval (transient-suffixes 'magit-dispatch)
-   :eg-result-string "Lots of suffix objects")
+   :eg-result-string "List of suffix objects for arbitrary prefix"
+   :no-eval transient-suffixes
+   :eg-result-string "List of suffixes for `transient-current-prefix'.")
   (transient-args
+   :no-manual t
    :eval (transient-args 'magit-dispatch))
   (transient-arg-value
-   :eval (transient-arg-value "--flavor=" (transient-args transient-current-command)))
-  "Flow control"
+   :no-manual t
+   :no-eval (transient-arg-value "--flavor=" (transient-args transient-current-command))
+   :eg-result-string "Remember most arguments use their argument representation as their key.")
+  "Accessing other transients and their infixes"
+  (transient-suffixes
+   :no-manual t
+   :no-eval (transient-suffixes 'magit-dispatch)
+   :eg-result-string "Suffixes for an arbitrary prefix command."
+   :no-eval (oref suffix-object value)
+   :eg-result-string "Value of a suffix from `transient-suffixes'")
+  (get
+   :no-eval (get 'suffix-command 'transient--suffix)
+   :eg-result-string "Suffix object for a suffix command."
+   :no-eval (get 'prefix-command 'transient--prefix)
+   :eg-result-string "Prefix object for a prefix command.")
+  (oref
+   :no-eval (oref (get 'magit-dispatch 'transient--prefix) scope)
+   :eg-result-string "Value that would be used to re-populate suffixes."
+   :eval (oref (get 'magit-dispatch 'transient--prefix) variable))
+   ;; This would be great, but transient doesn't keep suffixes hydrated all the time.
+   ;; :eval (oref (get 'magit:--gpg-sign 'transient--suffix) value)
+   ;;:eg-result-string "This value may be nil in between prefix initalizations."
+
+   "Flow control"
   (transient-setup
    :no-manual t
    :no-eval (transient-setup 'magit-dispatch)
-   :no-eval (transient-setup 'magit-dispatch nil nil :scope nil))
-  (transient--do-recurse :no-manual t)
-  (transient--do-replace :no-manual t)
-  (transient--do-call :no-manual t)
-  (transient--do-stay :no-manual t)
-  (transient--do-return :no-manual t)
+   :eg-result-string "Transient set up for this prefix."
+   :no-eval (transient-setup 'magit-dispatch nil nil :scope "value")
+   :eg-result-string "Transient set up with custom scope.")
+  (transient--do-stay
+   :no-manual t
+   :eg-result-string "Infixes that don't access variables and stay in the same prefix.")
+  (transient--do-call
+   :no-manual t
+   :eg-result-string "Suffixes that need to access variables but stays in the same prefix.")
+  (transient--do-replace
+   :no-manual t
+   :eg-result-string "Current prefix will be replaced and not left on the stack.")
+  (transient--do-recurse
+   :no-manual t
+   :eg-result-string "Sub-prefix's suffixes will all return to current prefix.")
+  (transient--do-return
+   :no-manual t
+   :eg-result-string "If there is a prefix on the stack, return to it before evaluating this command.")
+  (transient--do-exit
+   :no-manual t
+   :eg-result-string "Pop the entire stack and exit transient before evaluating this command.")
   "Manipulating persistence & state"
-  (transient-set-value)
-  (transient-set)
-  (transient-save)
-  (transient-reset)
-  (transient-reset-value)
-  (transient-history-next)
-  (transient-history-prev)
+  (transient-set
+   :no-manual t
+   :eg-result-string "Set for this session, on the prefix object.")
+  (transient-save
+   :no-manual t
+   :eg-result-string "Save for future sessions, in `transient-values'.")
+  (transient-reset
+   :no-manual t
+   :eg-result-string "Forget saved & set values.")
+  (transient-history-next
+   :no-manuat t
+   :eg-result-string "Use previous value from `transient-history'")
+  (transient-history-prev
+   :no-manual t
+   :eg-result-string "Use previous value from `transient-history'")
   "Readers for arguments"
-  (transient-read-number-N+)
-  (transient-read-number-N0)
-  (transient-read-date)
-  (transient-read-file)
-  (transient-read-directory)
-  (transient-read-existing-directory)
-  (transient-read-existing-file)
-  "Modifying Objects"
+  (transient-read-number-N+ :no-manual t)
+  (transient-read-number-N0 :no-manual t)
+  (transient-read-date :no-manual t)
+  (transient-read-file :no-manual t)
+  (transient-read-directory :no-manual t)
+  (transient-read-existing-directory :no-manual t)
+  (transient-read-existing-file :no-manual t)
+
+  "Modifying Layouts"
   (transient-parse-suffix
+   :no-manual t
    :eval (transient-parse-suffix 'magit-dispatch '("a" "argument" "--argument=")))
   (transient-parse-suffixes
-   :eval (transient-parse-suffix 'magit-dispatch [("a" "argument" "--argument=")]))
+   :no-manual t
+   :eval (transient-parse-suffixes 'magit-dispatch [("a" "argument" "--argument=")]))
   (transient-get-suffix
+   :no-manual t
    :eval (transient-get-suffix 'magit-dispatch "c")
    :eval (transient-get-suffix 'magit-dispatch 'magit-commit)
    :eval (transient-get-suffix 'magit-dispatch '(0 1 1)))
-  (transient-remove-suffix)
-  (transient-replace-suffix)
-  (transient-insert-suffix)
-  (transient-suffix-put)
+  (transient-remove-suffix :no-manual t)
+  (transient-replace-suffix :no-manual t)
+  (transient-insert-suffix :no-manual t)
+  (transient-suffix-put :no-manual t)
   "Classes"
-  (transient-prefix)
-  (transient-suffix)
-  (transient-infix)
-  (transient-variable)
-  (transient-child-variable)
-  (transient-lisp-variable)
-  (transient-argument)
-  (transient-switches)
-  (transient-option)
-  (transient-files)
-  (transient-switch)
-
-  (transient-child)
-  (transient-group)
-  (transient-subgroups)
-  (transient-columns)
-  (transient-row)
-  (transient-columns))
+  (transient-prefix :no-manual t)
+  (transient-suffix :no-manual t)
+  (transient-infix :no-manual t)
+  (transient-variable :no-manual t)
+  (transient-child-variable :no-manual t)
+  (transient-lisp-variable :no-manual t)
+  (transient-argument :no-manual t)
+  (transient-switches :no-manual t)
+  (transient-option :no-manual t)
+  (transient-files :no-manual t)
+  (transient-switch :no-manual t)
+  (transient-child :no-manual t)
+  (transient-group :no-manual t)
+  (transient-subgroups :no-manual t)
+  (transient-columns :no-manual t)
+  (transient-column :no-manual t)
+  (transient-row :no-manual t))
 
 (define-short-documentation-group plist
   "Plists"
@@ -280,6 +346,9 @@
       :eval (and-let* ((foo "bar") (baz nil)))
       :eval (and-let* ((foo "bar") (baz "boo")))
       :eval (and-let* ((foo "bar") (baz (concat foo "boo")))))
+  (cond
+   :eval (cond ((eq 'foo 'bar) (identity "baz")
+                (t (identity "fallthrough")))))
   "Evaluate several forms but return one of the results."
   (progn
     :eval (progn (concat "a" "b") (concat "c" "d")))
