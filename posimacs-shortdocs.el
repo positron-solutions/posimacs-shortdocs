@@ -316,7 +316,50 @@
   (vconcat
    :eval (vconcat (kbd "C-u 4 C-p C-k"))
    :eval (key-description [21 52 16 11])
-   :eval (key-description (vconcat (kbd "C-u 4 C-p C-k")))))
+   :eval (key-description (vconcat (kbd "C-u 4 C-p C-k"))))
+  "Look up bindings."
+  (lookup-key
+   :eval (lookup-key (current-global-map) "\M-f")
+   :eval (lookup-key (current-global-map) "")
+   :eval (lookup-key (current-global-map) [6])
+   :eval (lookup-key (current-global-map) (kbd "C-f"))
+   :eval (lookup-key (current-global-map) (kbd "C-f") t))
+  (key-binding
+   :eval (key-binding [7])
+   :eval (key-binding "")
+   :eval (key-binding (kbd "C-x C-f"))
+   :eval (key-binding [24 6])
+   :eval (key-binding ""))
+  (local-key-binding
+   :eval (local-key-binding (vconcat (kbd "C-j")))
+   :eval (local-key-binding [10]))
+  (global-key-binding
+   :eval (global-key-binding (kbd "C-x C-f")))
+  (minor-mode-key-binding
+   :eval (minor-mode-key-binding (kbd "C-c C-SPC"))
+   :eg-result '(keymap (67108896 . erc-track-switch-buffer)))
+  "Commands to display bindings."
+  (describe-key
+   :no-eval (describe-key)
+   :eg-result-string "A help buffer with the corresponding command.")
+  (describe-bindings
+   :no-eval (describe-bindings)
+   :eg-result-string "A help buffer with bindings formatted.")
+  (where-is
+   :no-eval (where-is 'execute-extended-command)
+   :eg-result-string "execute-extended-command is remapped to counsel-M-x which is on <execute>, <menu>, M-x
+nil")
+  "Functions to get maps."
+  (current-global-map
+   :no-eval (current-global-map)
+   :eg-result '(keymap …))
+  (current-active-maps
+   :no-eval (current-active-maps)
+   :eg-result ((keymap …) (keymap …) … (keymap …)))
+  "Define key in a specific map."
+  (define-key
+    :no-eval (define-key (current-global-map) (kbd "C-f") 'save-buffers-kill-terminal))
+  (define-l
 
 (define-short-documentation-group binding-and-conditionals
   "Binding variables and conditional forms."
