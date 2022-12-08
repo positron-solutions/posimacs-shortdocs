@@ -17,6 +17,7 @@ cherry-pick the good ones without second thought.*
    '(posimacs-shortdocs
      :type git :host github :repo "positron-solutions/posimacs-shortdocs")
    :demand t)
+
 #+end_src
 
 ** Install with Elpaca
@@ -24,10 +25,11 @@ cherry-pick the good ones without second thought.*
    (Untested.  PR's welcome)
 
 #+begin_src elisp
+
   ;; using elpaca (recommended to add a hash for reproducibility)
   (elpaca-use-package
    (example :host github
-            :repo "positron-solutions/positron-shortdocs")
+            :repo "positron-solutions/posimacs-shortdocs")
    :demand t)
 
 #+end_src
