@@ -34,6 +34,23 @@ cherry-pick the good ones without second thought.*
 
 #+end_src
 
+* Contents                                                         :noexport:
+:PROPERTIES:
+:TOC:      :include siblings
+:END:
+:CONTENTS:
+- [[Licensing, Developer Certificate of Origin][Licensing, Developer Certificate of Origin]]
+  - [[License][License]]
+  - [[Developer Certificate of Origin (DCO)][Developer Certificate of Origin (DCO)]]
+    - [[Sign-off][Sign-off]]
+    - [[GPG signature][GPG signature]]
+    - [[User setup for submitting changes][User setup for submitting changes]]
+      - [[Automatically add sign-off][Automatically add sign-off]]
+      - [[Automatic GPG signing with per-project keys][Automatic GPG signing with per-project keys]]
+      - [[Manually signing & adding sign-off][Manually signing & adding sign-off]]
+- [[Footnote on FSF and Emacs Core Licensing][Footnote on FSF and Emacs Core Licensing]]
+:END:
+
 * Licensing, Developer Certificate of Origin
 
   This project is distributed with a Developer Certificate of Origin.  By adding
@@ -41,9 +58,17 @@ cherry-pick the good ones without second thought.*
   authenticate your sign-off later strengthening your attestations stated in the
   DCO, upholding the overall integrity of the license coverage over the project.
 
+  If you fail to implement this scheme, Emacs core will have significant reasons
+  not to directly merge changes that accumulate in this package because there
+  will not be a clear attestation of authority to submit changes under the terms
+  of this project's license.
+
 ** License
 
-   This project is GPL3 licensed and a copy is distributed in the file, [[./COPYING][COPYING]].
+   The lisp code is GPL3 licensed and contains GPL3 license headers.  The CI
+   code is MIT licensed and should contain a full MIT license text.
+
+   The CI code is mostly copied from [[https://github.com/positron-solutions/posimacs-shortdocs][elisp-repo-kit]].
 
 ** Developer Certificate of Origin (DCO)
 
@@ -56,7 +81,9 @@ cherry-pick the good ones without second thought.*
     following:
 
     #+begin_src
+
     Signed-off-by: Random J Developer <random@developer.example.org>
+
     #+end_src
 
 *** GPG signature
@@ -86,34 +113,39 @@ cherry-pick the good ones without second thought.*
 
 **** Automatic GPG signing with per-project keys
 
-    In order to specify which projects you intend to sign with which keys, you
-    will want to configure your git client using path-specific configurations.
+     In order to specify which projects you intend to sign with which keys, you
+     will want to configure your git client using path-specific configurations.
 
-    Configuing git for this can be done with the following directory structure:
+     Configuing git for this can be done with the following directory structure:
 
-    #+begin_src
+     #+begin_src
+
     /home/rjdeveloper/
     ├── .gitconfig
     └── .gitconfig.d
         ├── sco-linux-projects.conf
         ├── other-projects.conf
         └── gpg-signing-projects.conf
-    #+end_src
 
-    In your root config, ~.gitconfig~, add an =includeIf= directive that will
-    load the configuration you use for projects you intend to GPG sign commits
-    for.
+     #+end_src
 
-    #+begin_src
+     In your root config, ~.gitconfig~, add an =includeIf= directive that will
+     load the configuration you use for projects you intend to GPG sign commits
+     for.
+
+     #+begin_src
+
     [includeIf "gitdir:/home/rjdeveloper/**/gpg-signing/**/.git"]
       path = "~/.gitconfig.d/gpg-signing-projects.conf"
-    #+end_src
 
-    In the ~gpg-signing-projects.conf~ add your GPG signing configuration from
-    earlier.  =sign= adds the GPG signature automatically.  File an issue if you
-    need help with multiple GPG homes or other configurations.
+     #+end_src
 
-    #+begin_src
+     In the ~gpg-signing-projects.conf~ add your GPG signing configuration from
+     earlier.  =sign= adds the GPG signature automatically.  File an issue if you
+     need help with multiple GPG homes or other configurations.
+
+     #+begin_src
+
     [user]
       name = "Random J Developer"
       email = "random@developer.example.org"
@@ -122,41 +154,50 @@ cherry-pick the good ones without second thought.*
     [commit]
       sign = true
       gpgSign = true
-    #+end_src
+
+     #+end_src
 
 **** Manually signing & adding sign-off
 
-    If you don't like these configurations and want to individually indicate you
-    have read and intend to apply the DCO to your changes, these commands are
-    equivalent:
+     If you don't like these configurations and want to individually indicate you
+     have read and intend to apply the DCO to your changes, these commands are
+     equivalent:
 
-    #+begin_src bash
-      git commit -s -S --message "I don't like using .gitconfig"
+     #+begin_src bash
+       git commit -s -S --message "I don't like using .gitconfig"
 
-      # To clean up a commit
-      git commit --amend -s -S --no-message
+       # To clean up a commit
+       git commit --amend -s -S --no-message
 
-      # Combine with rebase to sign / sign-off multiple existing commits
-      git rebase -i
-    #+end_src
+       # Combine with rebase to sign / sign-off multiple existing commits
+       git rebase -i
+     #+end_src
 
 * Footnote on FSF and Emacs Core Licensing
 
-Free Software Foundation (FSF) frequently requires copyright assignment on all
-code that goes into Emacs core. Many GNU projects have since switched to using a
-Developer Certificate of Origin.  DCO sign-off is a practice accepted by git,
-GCC, and the [[https://wiki.linuxfoundation.org/dco][Linux Kernel]].
+  Free Software Foundation (FSF) frequently requires copyright assignment on all
+  code that goes into Emacs core. Many GNU projects have since switched to using
+  a Developer Certificate of Origin.  DCO sign-off is a practice accepted by
+  git, GCC, and the [[https://wiki.linuxfoundation.org/dco][Linux Kernel]].
 
-Doing DCO sign-off is not the same as copyright assignment, and serves a
-slightly different purpose.  DCO sign-off is an attestation from the submitter
-stating that they have sufficient direct or transitive authority make their
-submission under the terms of the license of the recieving project.  Copyright
-assignment serves a more offensive role in the case of GPL non-compliance,
-giving FSF alone legal standing.  If you don't care about FSF being able to sue
-people, the DCO should suffice.
+  Doing DCO sign-off is not the same as copyright assignment, and serves a
+  slightly different purpose.  DCO sign-off is an attestation from the submitter
+  stating that they have sufficient direct or transitive authority make their
+  submission under the terms of the license of the recieving project.  Copyright
+  assignment serves a more offensive role in the case of GPL non-compliance,
+  giving FSF alone legal standing.  If you don't care about FSF being able to
+  sue people, the DCO should suffice.
 
-Using the DCO *may* make it easier for code in your project to be included in
-Emacs core later.  Regardless of FSF's ongoing position on use of DCO's, by
-requiring DCO sign-off and GPG signature, you can be assured that changes
-submitted to a code base you control are strongly attested to be covered by the
-license you chose.
+  Using the DCO *may* make it easier for code in your project to be included in
+  Emacs core later.  *It is the intent of this choice to steer FSF towards
+  DCO-like solutions in order to accelerate code flow into Emacs.* Regardless of
+  FSF's ongoing position on use of DCO's, by requiring DCO sign-off and GPG
+  signature, you can be assured that changes submitted to a code base you
+  control are strongly attested to be covered by the license you chose.
+
+# Local Variables:
+# before-save-hook: (lambda () (when (require 'org-make-toc nil t) (org-make-toc)))
+# org-export-with-properties: ()
+# org-export-with-title: t
+# End:
+  

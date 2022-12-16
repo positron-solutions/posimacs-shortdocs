@@ -1,11 +1,12 @@
-;;; posimacs-shortdocs.el --- supplemental shortdocs  -*- lexical-binding: t -*-
+;;; posimacs-shortdocs.el --- Supplemental shortdocs  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2022 Positron Solutions
 
+;; Homepage: https://github.com/positron-solutions/posimacs-shortdocs
 ;; Author: Psionik K <73710933+psionic-k@users.noreply.github.com>
-;; Keywords: shortdocs
+;; Keywords: docs
 ;; Version: 0.1.0
-;; Package-Requires: ((emacs "28.1"))
+;; Package-Requires: ((emacs "28.1") (shortdoc "0.0.0"))
 
 ;; This file is not part of GNU Emacs.
 
@@ -29,6 +30,9 @@
 ;; See the definitions below for the groups.
 
 ;;; Code:
+
+(eval-when-compile
+  (require 'shortdoc))
 
 (define-short-documentation-group eieio
   "Introspecting classes and objects"
@@ -358,8 +362,7 @@ nil")
    :eg-result ((keymap …) (keymap …) … (keymap …)))
   "Define key in a specific map."
   (define-key
-    :no-eval (define-key (current-global-map) (kbd "C-f") 'save-buffers-kill-terminal))
-  (define-l
+    :no-eval (define-key (current-global-map) (kbd "C-f") 'save-buffers-kill-terminal)))
 
 (define-short-documentation-group binding-and-conditionals
   "Binding variables and conditional forms."
