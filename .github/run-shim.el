@@ -33,8 +33,8 @@
 ;; contains the dependencies declared in the flake.nix.
 ;;
 ;;   nix develop
-;;   "emacs" --quick --script test/run-shim.el -- test
-;;   "emacs" --quick --script test/run-shim.el -- lint
+;;   "emacs" --quick --script .github/run-shim.el -- test
+;;   "emacs" --quick --script .github/run-shim.el -- lint
 ;;
 ;; Note that this elisp script assumes that some packages are located in
 ;; specific locations.
@@ -61,9 +61,8 @@
             ;; "--no-check-declare"
             )
           (seq-filter
-           (lambda (s) (or (not (string-match-p ".*autoloads.*.el$" s))
-                      (not (string-match-p "run-shim.el$" s)))
-           (file-expand-wildcards "*.el")))))
+           (lambda (s) (not (string-match-p ".*autoloads.*.el$" s)))
+           (file-expand-wildcards "../*.el")))))
 
     (message "ARGS: %s" command-line-args-left)
 
@@ -90,7 +89,7 @@
   ;; Configure load paths
   (setq default-directory (if load-file-name (file-name-directory load-file-name)
                             default-directory))
-  (let* ((lisp-dir (expand-file-name default-directory)))
+  (let* ((lisp-dir (expand-file-name (concat default-directory "../"))))
     (print (format "package load path: %s" lisp-dir))
     (push lisp-dir load-path))
 

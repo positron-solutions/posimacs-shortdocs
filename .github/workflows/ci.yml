@@ -62,7 +62,7 @@ jobs:
         run: |
           eval "$(nix print-dev-env .#${{ matrix.emacsPkg }})"
 
-          emacs --script run-shim.el -- lint
+          emacs --script .github/run-shim.el -- lint
 
           echo $PWD
 
@@ -71,6 +71,6 @@ jobs:
         run: |
           eval "$(nix print-dev-env .#${{ matrix.emacsPkg }})"
 
-          emacs --script run-shim.el -- load
+          emacs --script .github/run-shim.el -- load
 
           echo $PWD
