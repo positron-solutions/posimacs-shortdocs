@@ -359,8 +359,7 @@ nil")
    :eg-result ((keymap …) (keymap …) … (keymap …)))
   "Define key in a specific map."
   (define-key
-    :no-eval (define-key (current-global-map) (kbd "C-f") 'save-buffers-kill-terminal))
-  (define-l
+    :no-eval (define-key (current-global-map) (kbd "C-f") 'save-buffers-kill-terminal)))
 
 (define-short-documentation-group binding-and-conditionals
   "Binding variables and conditional forms."
