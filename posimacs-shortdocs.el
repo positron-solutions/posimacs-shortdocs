@@ -31,6 +31,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'shortdoc))
+
 (define-short-documentation-group eieio
   "Introspecting classes and objects"
   (symbol-plist
