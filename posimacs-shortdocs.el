@@ -6,7 +6,7 @@
 ;; Author: Psionik K <73710933+psionic-k@users.noreply.github.com>
 ;; Keywords: docs
 ;; Version: 0.1.0
-;; Package-Requires: ((emacs "28.1"))
+;; Package-Requires: ((emacs "28.1") (shortdoc "0.0.0"))
 
 ;; This file is not part of GNU Emacs.
 
