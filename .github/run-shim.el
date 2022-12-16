@@ -57,7 +57,9 @@
           '(;; "--no-<check>
             ;; "--no-byte-compile"
             "--no-checkdoc"
-            ;; "--no-package-lint"
+            "--no-indent"
+            "--no-package-lint"
+            "--no-fill-column"
             ;; "--no-check-declare"
             )
           (seq-filter

@@ -1,9 +1,10 @@
-;;; posimacs-shortdocs.el --- supplemental shortdocs  -*- lexical-binding: t -*-
+;;; posimacs-shortdocs.el --- Supplemental shortdocs  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2022 Positron Solutions
 
+;; Homepage: https://github.com/positron-solutions/posimacs-shortdocs
 ;; Author: Psionik K <73710933+psionic-k@users.noreply.github.com>
-;; Keywords: shortdocs
+;; Keywords: docs
 ;; Version: 0.1.0
 ;; Package-Requires: ((emacs "28.1"))
 
